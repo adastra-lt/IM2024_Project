@@ -5,6 +5,8 @@ from app.api.models import MovieOut, MovieIn, MovieUpdate
 from app.api import db_manager
 from app.api.service import is_cast_present
 
+import pandas as pd
+
 movies = APIRouter()
 
 @movies.post('/', response_model=MovieOut, status_code=201)
@@ -57,3 +59,21 @@ async def delete_movie(id: int):
     if not movie:
         raise HTTPException(status_code=404, detail="Movie not found")
     return await db_manager.delete_movie(id)
+
+@movies.get('/by_plot/{plot}/', response_model=List[MovieOut])
+async def get_movies_by_plot(plot: str):
+    all_movies = await db_manager.get_all_movies()
+
+    # Convert the movies to a Pandas DataFrame for easier manipulation
+    movies_df = pd.DataFrame(all_movies)
+
+    # Filter movies by the plot
+    filtered_movies_df = movies_df[movies_df['plot'].str.contains(plot, case=False)]
+
+    # Convert the filtered DataFrame back to a list of dictionaries
+    filtered_movies = filtered_movies_df.to_dict(orient='records')
+
+    if not filtered_movies:
+        raise HTTPException(status_code=404, detail=f"No movies found with plot containing: {plot}")
+
+    return filtered_movies
