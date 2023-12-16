@@ -11,6 +11,7 @@ services:
     environment:
       - DATABASE_URI=postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev
       - CAST_SERVICE_HOST_URL=http://cast_service:8000/api/v1/casts/
+      - MANUFACTURING_SERVICE_HOST_URL=http://manufacturing_service:8000/api/v1/manufacturing/
     depends_on:
       - movie_db
 
@@ -44,6 +45,28 @@ services:
       - POSTGRES_PASSWORD=cast_db_password
       - POSTGRES_DB=cast_db_dev
 
+  manufacturing_service:
+    build: ./manufacturing-service
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./manufacturing-service/:/app/
+    ports:
+      - 8003:8000
+    environment:
+      - DATABASE_URI=postgresql://manufacturing_db_username:manufacturing_db_password@manufacturing_db/manufacturing_db_dev
+    depends_on:
+      - manufacturing_db
+
+  manufacturing_db:
+    image: postgres:16.1-alpine
+    volumes:
+      - postgres_data_manufacturing:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=manufacturing_db_username
+      - POSTGRES_PASSWORD=manufacturing_db_password
+      - POSTGRES_DB=manufacturing_db_dev
+
+
   nginx:
     image: nginx:latest
     ports:
@@ -53,7 +76,9 @@ services:
     depends_on:
       - cast_service
       - movie_service
+      - manufacturing_service
 
 volumes:
   postgres_data_movie:
   postgres_data_cast:
+  postgres_data_manufacturing:
