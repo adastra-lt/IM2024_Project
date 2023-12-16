@@ -23,3 +23,4 @@ A small project that showcases Python, REST API (FastAPI), Docker, Pandas and SQ
 To reach the Swagger UI, open the following links:
 - http://localhost:8080/api/v1/movies/docs for movie service docs
 - http://localhost:8080/api/v1/casts/docs for cast service docs
+- http://localhost:8080/api/v1/manufacturing/docs for manufacturing service docs
