@@ -1,7 +1,6 @@
 from typing import List
 from fastapi import APIRouter, HTTPException
 
-# Assuming InventoryIn, InventoryOut, and InventoryUpdate are defined in your models
 from app.api.models import InventoryOut, InventoryIn, InventoryUpdate
 from app.api import db_manager
 

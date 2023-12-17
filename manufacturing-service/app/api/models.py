@@ -201,7 +201,7 @@ class PromotionTypeUpdate(PromotionTypeBase):
     name: Optional[str] = None
 
 
-class ProductIn(BaseModel):
+class ProductIn(ProductBase):
     name: str
     price: float
     # Add any other fields that are required for creating a product
@@ -226,32 +226,36 @@ class InventoryUpdate(BaseModel):
     price_per_unit: Optional[float]
 
 
-class SaleIn(BaseModel):
+class SaleIn(SaleBase):
     product_id: int
     quantity: int
     date: datetime
     customer_id: int
 
 
-class StoreIn(BaseModel):
+class StoreIn(StoreBase):
     pass
 
 
-class CustomerIn(BaseModel):
+class CustomerIn(CustomerBase):
     pass
 
 
-class SalespersonIn(BaseModel):
+class SalespersonIn(SalespersonBase):
     pass
 
 
-class SaleDetailsIn(BaseModel):
+class SaleDetailsIn(SaleDetailsBase):
     pass
 
 
-class PromotionIn(BaseModel):
+class SaleDetailsOut(SaleDetailsBase):
     pass
 
 
-class PromotionTypeIn(BaseModel):
+class PromotionIn(PromotionBase):
+    pass
+
+
+class PromotionTypeIn(PromotionTypeBase):
     pass

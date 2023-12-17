@@ -10,13 +10,13 @@ A small project that showcases Python, REST API (FastAPI), Docker, Pandas and SQ
 - Execute the following commands in the root directory of the project:
 
 ```bash
-  docker-compose up -d
+docker-compose up -d
 ```
 
 - If you are observing 502 Bad Gateway in NGINX you could try to run it on the same network before executing the command above:
 
 ```bash
-  docker run --name nginx -d -v /root/nginx/conf:/etc/nginx/conf.d --net=host nginx
+docker run --name nginx -d -v /root/nginx/conf:/etc/nginx/conf.d --net=host nginx
 ```
 
 
