@@ -1,12 +1,16 @@
 from fastapi import FastAPI
 from app.api.db import metadata, database, engine
-from app.api.products import products
-from app.api.sales import sales
-from app.api.inventory import inventory
-from app.api.saledetails import saledetails
-from app.api.salespersons import salespersons
-from app.api.promotions import promotions
-from app.api.promotiontypes import promotiontypes
+from app.api.customer import customer
+from app.api.gender import gender
+from app.api.product import product
+from app.api.product_store import product_store
+from app.api.sale import sale
+from app.api.sale_details import sale_details
+from app.api.salesperson import salesperson
+from app.api.store import store
+from app.api.store_type import store_type
+from app.api.promotion import promotion
+from app.api.promotion_type import promotion_type
 
 
 metadata.create_all(engine)
@@ -22,11 +26,14 @@ async def shutdown():
     await database.disconnect()
 
 # Include your routers here
-app.include_router(products, prefix='/api/v1/products', tags=['products'])
-app.include_router(sales, prefix='/api/v1/sales', tags=['sales'])
-app.include_router(inventory, prefix='/api/v1/inventory', tags=['inventory'])
-app.include_router(saledetails, prefix='/api/v1/saledetails', tags=['saledetails'])
-# app.include_router(customers, prefix='/api/v1/customers', tags=['customers'])
-app.include_router(salespersons, prefix='/api/v1/salespersons', tags=['salespersons'])
-app.include_router(promotions, prefix='/api/v1/promotions', tags=['promotions'])
-app.include_router(promotiontypes, prefix='/api/v1/promotiontypes', tags=['promotiontypes'])
+app.include_router(product, prefix='/api/v1/product', tags=['product'])
+app.include_router(product_store, prefix='/api/v1/product_store', tags=['product_store'])
+app.include_router(sale, prefix='/api/v1/sale', tags=['sale'])
+app.include_router(sale_details, prefix='/api/v1/sale_details', tags=['sale_details'])
+app.include_router(customer, prefix='/api/v1/customer', tags=['customer'])
+app.include_router(salesperson, prefix='/api/v1/salesperson', tags=['salesperson'])
+app.include_router(gender, prefix='/api/v1/gender', tags=['gender'])
+app.include_router(store, prefix='/api/v1/store', tags=['store'])
+app.include_router(store_type, prefix='/api/v1/store_type', tags=['store_type'])
+app.include_router(promotion, prefix='/api/v1/promotion', tags=['promotion'])
+app.include_router(promotion_type, prefix='/api/v1/promotion_type', tags=['promotion_type'])

@@ -1,222 +1,340 @@
 from app.api.models import (
-    ProductIn, ProductOut, ProductUpdate,
-    StoreIn, StoreOut, StoreUpdate,
-    CustomerIn, CustomerOut, CustomerUpdate,
-    SalespersonIn, SalespersonOut, SalespersonUpdate,
-    SaleIn, SaleOut, SaleUpdate,
-    SaleDetailsIn, SaleDetailsOut, SaleDetailsUpdate,
-    PromotionIn, PromotionOut, PromotionUpdate,
-    PromotionTypeIn, PromotionTypeOut, PromotionTypeUpdate
+    ProductCreate, ProductOut, ProductUpdate,
+    StoreCreate, StoreOut, StoreUpdate,
+    CustomerCreate, CustomerOut, CustomerUpdate,
+    SalespersonCreate, SalespersonOut, SalespersonUpdate,
+    SaleCreate, SaleOut, SaleUpdate,
+    SaleDetailsCreate, SaleDetailsOut, SaleDetailsUpdate,
+    PromotionCreate, PromotionOut, PromotionUpdate,
+    PromotionTypeCreate, PromotionTypeOut, PromotionTypeUpdate,
+    GenderCreate, GenderOut, GenderUpdate,
+    StoreTypeCreate, StoreTypeOut, StoreTypeUpdate,
+    ProductStoreCreate, ProductStoreOut, ProductStoreUpdate
 )
 from app.api.db import (
-    products, stores, customers, salespersons, sales, saledetails, promotions, promotiontypes,
+    product, store, customer, salesperson, sale, sale_detail, promotion, promotion_type, store_type, gender, product_store,
     database
 )
 
 
 # Product functions
-async def add_product(payload: ProductIn):
-    query = products.insert().values(**payload.dict())
+async def add_product(payload: ProductCreate):
+    query = product.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 
 async def get_all_products():
-    query = products.select()
-    return await database.fetch_all(query=query)
-
+    query = product.select()
+    results =  await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in ProductOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 async def get_product(id: int):
-    query = products.select().where(products.c.id == id)
-    return await database.fetch_one(query=query)
+    query = product.select().where(product.c.product_id == id)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in ProductOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_product(id: int):
-    query = products.delete().where(products.c.id == id)
+    query = product.delete().where(product.c.product_id == id)
     return await database.execute(query=query)
 
 
 async def update_product(id: int, payload: ProductUpdate):
-    query = products.update().where(products.c.id == id).values(**payload.dict())
+    query = product.update().where(product.c.product_id == id).values(**payload.dict())
     return await database.execute(query=query)
 
 
 # Store functions
-async def add_store(payload: StoreIn):
-    query = stores.insert().values(**payload.dict())
+async def add_store(payload: StoreCreate):
+    query = store.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 
 async def get_all_stores():
-    query = stores.select()
-    return await database.fetch_all(query=query)
+    query = store.select()
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in StoreOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_store(id: int):
-    query = stores.select().where(stores.c.id == id)
-    return await database.fetch_one(query=query)
+    query = store.select().where(store.c.store_id == id)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in StoreOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_store(id: int):
-    query = stores.delete().where(stores.c.id == id)
+    query = store.delete().where(store.c.store_id == id)
     return await database.execute(query=query)
 
 
 async def update_store(id: int, payload: StoreUpdate):
-    query = stores.update().where(stores.c.id == id).values(**payload.dict())
+    query = store.update().where(store.c.store_id == id).values(**payload.dict())
     return await database.execute(query=query)
 
 
 # Customer functions
-async def add_customer(payload: CustomerIn):
-    query = customers.insert().values(**payload.dict())
+async def add_customer(payload: CustomerCreate):
+    query = customer.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 
 async def get_all_customers():
-    query = customers.select()
+    query = customer.select()
     return await database.fetch_all(query=query)
 
 
 async def get_customer(id: int):
-    query = customers.select().where(customers.c.id == id)
+    query = customer.select().where(customer.c.customer_id == id)
     return await database.fetch_one(query=query)
 
 
 async def delete_customer(id: int):
-    query = customers.delete().where(customers.c.id == id)
+    query = customer.delete().where(customer.c.customer_id == id)
     return await database.execute(query=query)
 
 
 async def update_customer(id: int, payload: CustomerUpdate):
-    query = customers.update().where(customers.c.id == id).values(**payload.dict())
+    query = customer.update().where(
+        customer.c.customer_id == id).values(**payload.dict())
     return await database.execute(query=query)
 
 
 # Salesperson functions
-async def add_salesperson(payload: SalespersonIn):
-    query = salespersons.insert().values(**payload.dict())
+async def add_salesperson(payload: SalespersonCreate):
+    query = salesperson.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 
 async def get_all_salespersons():
-    query = salespersons.select()
+    query = salesperson.select()
     return await database.fetch_all(query=query)
 
 
 async def get_salesperson(id: int):
-    query = salespersons.select().where(salespersons.c.id == id)
+    query = salesperson.select().where(salesperson.c.salesperson_id == id)
     return await database.fetch_one(query=query)
 
 
 async def delete_salesperson(id: int):
-    query = salespersons.delete().where(salespersons.c.id == id)
+    query = salesperson.delete().where(salesperson.c.salesperson_id == id)
     return await database.execute(query=query)
 
 
 async def update_salesperson(id: int, payload: SalespersonUpdate):
-    query = salespersons.update().where(salespersons.c.id == id).values(**payload.dict())
+    query = salesperson.update().where(
+        salesperson.c.salesperson_id == id).values(**payload.dict())
     return await database.execute(query=query)
 
 
 # Sale functions
-async def add_sale(payload: SaleIn):
-    query = sales.insert().values(**payload.dict())
+async def add_sale(payload: SaleCreate):
+    query = sale.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 
 async def get_all_sales():
-    query = sales.select()
+    query = sale.select()
     return await database.fetch_all(query=query)
 
 
 async def get_sale(id: int):
-    query = sales.select().where(sales.c.id == id)
+    query = sale.select().where(sale.c.sale_id == id)
     return await database.fetch_one(query=query)
 
 
 async def delete_sale(id: int):
-    query = sales.delete().where(sales.c.id == id)
+    query = sale.delete().where(sale.c.sale_id == id)
     return await database.execute(query=query)
 
 
 async def update_sale(id: int, payload: SaleUpdate):
-    query = sales.update().where(sales.c.id == id).values(**payload.dict())
+    query = sale.update().where(sale.c.sale_id == id).values(**payload.dict())
     return await database.execute(query=query)
 
 
 # SaleDetails functions
-async def add_sale_details(payload: SaleDetailsIn):
-    query = saledetails.insert().values(**payload.dict())
+async def add_sale_details(payload: SaleDetailsCreate):
+    query = sale_detail.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 
 async def get_all_sale_details():
-    query = saledetails.select()
+    query = sale_detail.select()
     return await database.fetch_all(query=query)
 
 
 async def get_sale_details(id: int):
-    query = saledetails.select().where(saledetails.c.id == id)
+    query = sale_detail.select().where(sale_detail.c.sale_details_id == id)
     return await database.fetch_one(query=query)
 
 
 async def delete_sale_details(id: int):
-    query = saledetails.delete().where(saledetails.c.id == id)
+    query = sale_detail.delete().where(sale_detail.c.sale_details_id == id)
     return await database.execute(query=query)
 
 
 async def update_sale_details(id: int, payload: SaleDetailsUpdate):
-    query = saledetails.update().where(saledetails.c.id == id).values(**payload.dict())
+    query = sale_detail.update().where(
+        sale_detail.c.sale_details_id == id).values(**payload.dict())
     return await database.execute(query=query)
 
 
 # Promotion functions
-async def add_promotion(payload: PromotionIn):
-    query = promotions.insert().values(**payload.dict())
+async def add_promotion(payload: PromotionCreate):
+    query = promotion.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 
 async def get_all_promotions():
-    query = promotions.select()
+    query = promotion.select()
     return await database.fetch_all(query=query)
 
 
 async def get_promotion(id: int):
-    query = promotions.select().where(promotions.c.id == id)
+    query = promotion.select().where(promotion.c.promotion_id == id)
     return await database.fetch_one(query=query)
 
 
 async def delete_promotion(id: int):
-    query = promotions.delete().where(promotions.c.id == id)
+    query = promotion.delete().where(promotion.c.promotion_id == id)
     return await database.execute(query=query)
 
 
 async def update_promotion(id: int, payload: PromotionUpdate):
-    query = promotions.update().where(promotions.c.id == id).values(**payload.dict())
+    query = promotion.update().where(
+        promotion.c.promotion_id == id).values(**payload.dict())
     return await database.execute(query=query)
 
 
 # PromotionType functions
-async def add_promotion_type(payload: PromotionTypeIn):
-    query = promotiontypes.insert().values(**payload.dict())
+async def add_promotion_type(payload: PromotionTypeCreate):
+    query = promotion_type.insert().values(**payload.dict())
     return await database.execute(query=query)
 
 
 async def get_all_promotion_types():
-    query = promotiontypes.select()
+    query = promotion_type.select()
     return await database.fetch_all(query=query)
 
 
 async def get_promotion_type(id: int):
-    query = promotiontypes.select().where(promotiontypes.c.id == id)
+    query = promotion_type.select().where(promotion_type.c.promo_type_id == id)
     return await database.fetch_one(query=query)
 
 
 async def delete_promotion_type(id: int):
-    query = promotiontypes.delete().where(promotiontypes.c.id == id)
+    query = promotion_type.delete().where(promotion_type.c.promo_type_id == id)
     return await database.execute(query=query)
 
 
 async def update_promotion_type(id: int, payload: PromotionTypeUpdate):
-    query = promotiontypes.update().where(promotiontypes.c.id == id).values(**payload.dict())
+    query = promotion_type.update().where(
+        promotion_type.c.promo_type_id == id).values(**payload.dict())
+    return await database.execute(query=query)
+
+# Gender functions
+
+
+async def add_gender(payload: GenderCreate):
+    query = gender.insert().values(**payload.dict())
+    return await database.execute(query=query)
+
+
+async def get_all_genders():
+    query = gender.select()
+    return await database.fetch_all(query=query)
+
+
+async def get_gender(id: int):
+    query = gender.select().where(gender.c.gender_id == id)
+    return await database.fetch_one(query=query)
+
+
+async def delete_gender(id: int):
+    query = gender.delete().where(gender.c.gender_id == id)
+    return await database.execute(query=query)
+
+
+async def update_gender(id: int, payload: GenderUpdate):
+    query = gender.update().where(gender.c.gender_id == id).values(**payload.dict())
+    return await database.execute(query=query)
+
+
+# StoreType functions
+async def add_store_type(payload: StoreTypeCreate):
+    query = store_type.insert().values(**payload.dict())
+    return await database.execute(query=query)
+
+
+async def get_all_store_types():
+    query = store_type.select()
+    return await database.fetch_all(query=query)
+
+
+async def get_store_type(id: int):
+    query = store_type.select().where(store_type.c.store_type_id == id)
+    return await database.fetch_one(query=query)
+
+
+async def delete_store_type(id: int):
+    query = store_type.delete().where(store_type.c.store_type_id == id)
+    return await database.execute(query=query)
+
+
+async def update_store_type(id: int, payload: StoreTypeUpdate):
+    query = store_type.update().where(
+        store_type.c.store_type_id == id).values(**payload.dict())
+    return await database.execute(query=query)
+
+
+# ProductStore functions
+async def add_product_store(payload: ProductStoreCreate):
+    query = product_store.insert().values(**payload.dict())
+    return await database.execute(query=query)
+
+
+async def get_all_product_stores():
+    query = product_store.select()
+    return await database.fetch_all(query=query)
+
+
+async def get_product_store(id: int):
+    query = product_store.select().where(product_store.c.product_store_id == id)
+    return await database.fetch_one(query=query)
+
+
+async def delete_product_store(id: int):
+    query = product_store.delete().where(product_store.c.product_store_id == id)
+    return await database.execute(query=query)
+
+
+async def update_product_store(id: int, payload: ProductStoreUpdate):
+    query = product_store.update().where(
+        product_store.c.product_store_id == id).values(**payload.dict())
     return await database.execute(query=query)

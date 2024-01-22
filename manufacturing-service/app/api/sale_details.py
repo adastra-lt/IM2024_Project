@@ -1,14 +1,14 @@
 from typing import List
 from fastapi import APIRouter, HTTPException
 
-from app.api.models import SaleDetailsOut, SaleDetailsIn, SaleDetailsUpdate
+from app.api.models import SaleDetailsOut, SaleDetailsCreate, SaleDetailsUpdate
 from app.api import db_manager
 
-saledetails = APIRouter()
+sale_details = APIRouter()
 
 
-@saledetails.post('/', response_model=SaleDetailsOut, status_code=201)
-async def create_sale_detail(payload: SaleDetailsIn):
+@sale_details.post('/', response_model=SaleDetailsOut, status_code=201)
+async def create_sale_detail(payload: SaleDetailsCreate):
     sale_detail_id = await db_manager.add_sale_detail(payload)
     response = {
         'id': sale_detail_id,
@@ -17,12 +17,12 @@ async def create_sale_detail(payload: SaleDetailsIn):
     return response
 
 
-@saledetails.get('/', response_model=List[SaleDetailsOut])
+@sale_details.get('/', response_model=List[SaleDetailsOut])
 async def get_sale_details():
     return await db_manager.get_all_sale_details()
 
 
-@saledetails.get('/{id}/', response_model=SaleDetailsOut)
+@sale_details.get('/{id}/', response_model=SaleDetailsOut)
 async def get_sale_detail(id: int):
     sale_detail = await db_manager.get_sale_detail(id)
     if not sale_detail:
@@ -30,7 +30,7 @@ async def get_sale_detail(id: int):
     return sale_detail
 
 
-@saledetails.put('/{id}/', response_model=SaleDetailsOut)
+@sale_details.put('/{id}/', response_model=SaleDetailsOut)
 async def update_sale_detail(id: int, payload: SaleDetailsUpdate):
     sale_detail = await db_manager.get_sale_detail(id)
     if not sale_detail:
@@ -40,7 +40,7 @@ async def update_sale_detail(id: int, payload: SaleDetailsUpdate):
     return await db_manager.update_sale_detail(id, update_data)
 
 
-@saledetails.delete('/{id}/', response_model=None)
+@sale_details.delete('/{id}/', response_model=None)
 async def delete_sale_detail(id: int):
     sale_detail = await db_manager.get_sale_detail(id)
     if not sale_detail:

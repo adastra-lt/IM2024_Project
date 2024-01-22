@@ -1,14 +1,14 @@
 from typing import List
 from fastapi import APIRouter, HTTPException
 
-from app.api.models import SalespersonOut, SalespersonIn, SalespersonUpdate
+from app.api.models import SalespersonOut, SalespersonCreate, SalespersonUpdate
 from app.api import db_manager
 
-salespersons = APIRouter()
+salesperson = APIRouter()
 
 
-@salespersons.post('/', response_model=SalespersonOut, status_code=201)
-async def create_salesperson(payload: SalespersonIn):
+@salesperson.post('/', response_model=SalespersonOut, status_code=201)
+async def create_salesperson(payload: SalespersonCreate):
     salesperson_id = await db_manager.add_salesperson(payload)
     response = {
         'id': salesperson_id,
@@ -17,12 +17,12 @@ async def create_salesperson(payload: SalespersonIn):
     return response
 
 
-@salespersons.get('/', response_model=List[SalespersonOut])
+@salesperson.get('/', response_model=List[SalespersonOut])
 async def get_salespersons():
     return await db_manager.get_all_salespersons()
 
 
-@salespersons.get('/{id}/', response_model=SalespersonOut)
+@salesperson.get('/{id}/', response_model=SalespersonOut)
 async def get_salesperson(id: int):
     salesperson = await db_manager.get_salesperson(id)
     if not salesperson:
@@ -30,7 +30,7 @@ async def get_salesperson(id: int):
     return salesperson
 
 
-@salespersons.put('/{id}/', response_model=SalespersonOut)
+@salesperson.put('/{id}/', response_model=SalespersonOut)
 async def update_salesperson(id: int, payload: SalespersonUpdate):
     salesperson = await db_manager.get_salesperson(id)
     if not salesperson:
@@ -40,7 +40,7 @@ async def update_salesperson(id: int, payload: SalespersonUpdate):
     return await db_manager.update_salesperson(id, update_data)
 
 
-@salespersons.delete('/{id}/', response_model=None)
+@salesperson.delete('/{id}/', response_model=None)
 async def delete_salesperson(id: int):
     salesperson = await db_manager.get_salesperson(id)
     if not salesperson:
