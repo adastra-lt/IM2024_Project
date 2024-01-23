@@ -9,7 +9,7 @@ from app.api.models import (
     PromotionTypeCreate, PromotionTypeOut, PromotionTypeUpdate,
     GenderCreate, GenderOut, GenderUpdate,
     StoreTypeCreate, StoreTypeOut, StoreTypeUpdate,
-    ProductStoreCreate, ProductStoreOut, ProductStoreUpdate
+    ProductStoreOut,
 )
 from app.api.db import (
     product, store, customer, salesperson, sale, sale_detail, promotion, promotion_type, store_type, gender, product_store,

@@ -79,20 +79,11 @@ class ProductStoreBase(BaseModel):
     store_id: int
 
 
-class ProductStoreCreate(ProductStoreBase):
-    pass
-
-
 class ProductStoreOut(ProductStoreBase):
     product_store_id: int
 
     class Config:
         orm_mode = True
-
-
-class ProductStoreUpdate(BaseModel):
-    product_id: Optional[int] = None
-    store_id: Optional[int] = None
 
 
 class GenderBase(BaseModel):
