@@ -11,7 +11,7 @@ product = APIRouter()
 async def create_product(payload: ProductCreate):
     product_id = await db_manager.add_product(payload)
     response = {
-        'id': product_id,
+        'product_id': product_id,
         **payload.dict()
     }
     return response

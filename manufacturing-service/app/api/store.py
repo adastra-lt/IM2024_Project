@@ -9,7 +9,7 @@ store = APIRouter()
 @store.post('/', response_model=StoreOut, status_code=201)
 async def create_store(payload: StoreCreate):
     store_id = await db_manager.add_store(payload)
-    response = {'id': store_id, **payload.dict()}
+    response = {'store_id': store_id, **payload.dict()}
     return response
 
 

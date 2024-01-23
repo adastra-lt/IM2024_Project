@@ -25,7 +25,7 @@ async def add_product(payload: ProductCreate):
 
 async def get_all_products():
     query = product.select()
-    results =  await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
     return [
         {
             field: result[field]
@@ -34,6 +34,7 @@ async def get_all_products():
         }
         for result in results
     ]
+
 
 async def get_product(id: int):
     query = product.select().where(product.c.product_id == id)
@@ -106,12 +107,27 @@ async def add_customer(payload: CustomerCreate):
 
 async def get_all_customers():
     query = customer.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in CustomerOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_customer(id: int):
     query = customer.select().where(customer.c.customer_id == id)
-    return await database.fetch_one(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in CustomerOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_customer(id: int):
@@ -133,12 +149,27 @@ async def add_salesperson(payload: SalespersonCreate):
 
 async def get_all_salespersons():
     query = salesperson.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in SalespersonOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_salesperson(id: int):
     query = salesperson.select().where(salesperson.c.salesperson_id == id)
-    return await database.fetch_one(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in SalespersonOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_salesperson(id: int):
@@ -160,12 +191,27 @@ async def add_sale(payload: SaleCreate):
 
 async def get_all_sales():
     query = sale.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in SaleOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_sale(id: int):
     query = sale.select().where(sale.c.sale_id == id)
-    return await database.fetch_one(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in SaleOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_sale(id: int):
@@ -186,12 +232,27 @@ async def add_sale_details(payload: SaleDetailsCreate):
 
 async def get_all_sale_details():
     query = sale_detail.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in SaleDetailsOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_sale_details(id: int):
     query = sale_detail.select().where(sale_detail.c.sale_details_id == id)
-    return await database.fetch_one(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in SaleDetailsOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_sale_details(id: int):
@@ -213,12 +274,27 @@ async def add_promotion(payload: PromotionCreate):
 
 async def get_all_promotions():
     query = promotion.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in PromotionOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_promotion(id: int):
     query = promotion.select().where(promotion.c.promotion_id == id)
-    return await database.fetch_one(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in PromotionOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_promotion(id: int):
@@ -240,12 +316,27 @@ async def add_promotion_type(payload: PromotionTypeCreate):
 
 async def get_all_promotion_types():
     query = promotion_type.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in PromotionTypeOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_promotion_type(id: int):
     query = promotion_type.select().where(promotion_type.c.promo_type_id == id)
-    return await database.fetch_one(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in PromotionTypeOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_promotion_type(id: int):
@@ -268,12 +359,27 @@ async def add_gender(payload: GenderCreate):
 
 async def get_all_genders():
     query = gender.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in GenderOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_gender(id: int):
     query = gender.select().where(gender.c.gender_id == id)
-    return await database.fetch_one(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in GenderOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_gender(id: int):
@@ -294,12 +400,27 @@ async def add_store_type(payload: StoreTypeCreate):
 
 async def get_all_store_types():
     query = store_type.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in StoreTypeOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_store_type(id: int):
     query = store_type.select().where(store_type.c.store_type_id == id)
-    return await database.fetch_one(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in StoreTypeOut.__fields__.keys()
+            if field in result
+        }
+    return result
 
 
 async def delete_store_type(id: int):
@@ -314,27 +435,27 @@ async def update_store_type(id: int, payload: StoreTypeUpdate):
 
 
 # ProductStore functions
-async def add_product_store(payload: ProductStoreCreate):
-    query = product_store.insert().values(**payload.dict())
-    return await database.execute(query=query)
-
 
 async def get_all_product_stores():
     query = product_store.select()
-    return await database.fetch_all(query=query)
+    results = await database.fetch_all(query=query)
+    return [
+        {
+            field: result[field]
+            for field in ProductStoreOut.__fields__.keys()
+            if field in result
+        }
+        for result in results
+    ]
 
 
 async def get_product_store(id: int):
     query = product_store.select().where(product_store.c.product_store_id == id)
-    return await database.fetch_one(query=query)
-
-
-async def delete_product_store(id: int):
-    query = product_store.delete().where(product_store.c.product_store_id == id)
-    return await database.execute(query=query)
-
-
-async def update_product_store(id: int, payload: ProductStoreUpdate):
-    query = product_store.update().where(
-        product_store.c.product_store_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    result = await database.fetch_one(query=query)
+    if result:
+        return {
+            field: result[field]
+            for field in ProductStoreOut.__fields__.keys()
+            if field in result
+        }
+    return result

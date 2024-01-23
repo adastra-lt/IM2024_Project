@@ -11,7 +11,7 @@ salesperson = APIRouter()
 async def create_salesperson(payload: SalespersonCreate):
     salesperson_id = await db_manager.add_salesperson(payload)
     response = {
-        'id': salesperson_id,
+        'salesperson_id': salesperson_id,
         **payload.dict()
     }
     return response

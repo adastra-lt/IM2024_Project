@@ -30,10 +30,10 @@ customer = Table(
     Column('customer_id', Integer, primary_key=True),
     Column('customer_name', String(255)),
     Column('customer_address', String(255)),
-    Column('customer_vat', String(50)),
-    Column('customer_code', String(50)),
+    Column('customer_vat', Float),
+    Column('customer_code', Integer),
     Column('gender_id', Integer, ForeignKey('gender.gender_id')),
-    Column('customer_type', String(50))
+    Column('customer_type', String(1))
 )
 
 salesperson = Table(

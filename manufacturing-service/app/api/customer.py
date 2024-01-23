@@ -10,7 +10,7 @@ customer = APIRouter()
 @customer.post("/", response_model=CustomerOut, status_code=201)
 async def create_customer(payload: CustomerCreate):
     customer_id = await db_manager.add_customer(payload)
-    response = {"id": customer_id, **payload.dict()}
+    response = {"customer_id": customer_id, **payload.dict()}
     return response
 
 

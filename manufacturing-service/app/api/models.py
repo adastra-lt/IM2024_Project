@@ -28,7 +28,7 @@ class ProductUpdate(BaseModel):
 
 class StoreBase(BaseModel):
     store_name: str
-    store_area: float
+    store_area: str
     store_country: str
     store_city: str
     store_address: str
@@ -48,7 +48,7 @@ class StoreOut(StoreBase):
 
 class StoreUpdate(BaseModel):
     store_name: Optional[str] = None
-    store_area: Optional[float] = None
+    store_area: Optional[str] = None
     store_country: Optional[str] = None
     store_city: Optional[str] = None
     store_address: Optional[str] = None

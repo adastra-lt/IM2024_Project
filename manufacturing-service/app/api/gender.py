@@ -10,7 +10,7 @@ gender = APIRouter()
 @gender.post('/', response_model=GenderOut, status_code=201)
 async def create_gender(payload: GenderCreate):
     gender_id = await db_manager.add_gender(payload)
-    response = {'id': gender_id, **payload.dict()}
+    response = {'gender_id': gender_id, **payload.dict()}
     return response
 
 

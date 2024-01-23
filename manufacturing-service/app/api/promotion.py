@@ -11,7 +11,7 @@ promotion = APIRouter()
 async def create_promotion(payload: PromotionCreate):
     promotion_id = await db_manager.add_promotion(payload)
     response = {
-        'id': promotion_id,
+        'promotion_id': promotion_id,
         **payload.dict()
     }
     return response
