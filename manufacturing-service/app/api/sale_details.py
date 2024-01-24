@@ -36,8 +36,7 @@ async def update_sale_detail(id: int, payload: SaleDetailsUpdate):
     if not sale_detail:
         raise HTTPException(status_code=404, detail="Sale detail not found")
 
-    update_data = payload.dict(exclude_unset=True)
-    return await db_manager.update_sale_detail(id, update_data)
+    return await db_manager.update_sale_detail(id, payload)
 
 
 @sale_details.delete('/{id}/', response_model=None)

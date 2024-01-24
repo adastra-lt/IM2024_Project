@@ -36,8 +36,7 @@ async def update_promotion(id: int, payload: PromotionUpdate):
     if not promotion:
         raise HTTPException(status_code=404, detail="Promotion not found")
 
-    update_data = payload.dict(exclude_unset=True)
-    return await db_manager.update_promotion(id, update_data)
+    return await db_manager.update_promotion(id, payload)
 
 
 @promotion.delete('/{id}/', response_model=None)

@@ -31,7 +31,7 @@ async def update_store_type(id: int, payload: StoreTypeUpdate):
     store_type = await db_manager.get_store_type(id)
     if not store_type:
         raise HTTPException(status_code=404, detail="Store Type not found")
-    return await db_manager.update_store_type(id, payload.dict(exclude_unset=True))
+    return await db_manager.update_store_type(id, payload)
 
 
 @store_type.delete('/{id}/', response_model=None)

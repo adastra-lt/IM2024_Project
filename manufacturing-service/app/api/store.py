@@ -31,7 +31,7 @@ async def update_store(id: int, payload: StoreUpdate):
     store = await db_manager.get_store(id)
     if not store:
         raise HTTPException(status_code=404, detail="Store not found")
-    return await db_manager.update_store(id, payload.dict(exclude_unset=True))
+    return await db_manager.update_store(id, payload)
 
 
 @store.delete('/{id}/', response_model=None)

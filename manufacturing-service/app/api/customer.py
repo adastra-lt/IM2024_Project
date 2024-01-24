@@ -32,11 +32,8 @@ async def update_customer(id: int, payload: CustomerUpdate):
     customer = await db_manager.get_customer(id)
     if not customer:
         raise HTTPException(status_code=404, detail="Customer not found")
-    update_data = payload.dict(exclude_unset=True)
-    updated_customer = await db_manager.update_customer(id, update_data)
-    if updated_customer is None:
-        raise HTTPException(status_code=404, detail="Customer not found")
-    return updated_customer
+    
+    return await db_manager.update_customer(id, payload)
 
 
 @customer.delete("/{id}/", response_model=None, status_code=204)

@@ -32,8 +32,8 @@ async def update_gender(id: int, payload: GenderUpdate):
     gender = await db_manager.get_gender(id)
     if not gender:
         raise HTTPException(status_code=404, detail="Gender not found")
-    update_data = payload.dict(exclude_unset=True)
-    return await db_manager.update_gender(id, update_data)
+
+    return await db_manager.update_gender(id, payload)
 
 
 @gender.delete('/{id}/', response_model=None)

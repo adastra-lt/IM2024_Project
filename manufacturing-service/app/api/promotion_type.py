@@ -36,8 +36,7 @@ async def update_promotion_type(id: int, payload: PromotionTypeUpdate):
     if not promotion_type:
         raise HTTPException(status_code=404, detail="Promotion type not found")
 
-    update_data = payload.dict(exclude_unset=True)
-    return await db_manager.update_promotion_type(id, update_data)
+    return await db_manager.update_promotion_type(id, payload)
 
 
 @promotion_type.delete('/{id}/', response_model=None)

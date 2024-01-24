@@ -36,8 +36,7 @@ async def update_product(id: int, payload: ProductUpdate):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    update_data = payload.dict(exclude_unset=True)
-    return await db_manager.update_product(id, update_data)
+    return await db_manager.update_product(id, payload)
 
 
 @product.delete('/{id}/', response_model=None)
