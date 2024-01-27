@@ -31,6 +31,6 @@ docker-compose up -d
 
 To reach the Swagger UI, open the following link in your web browser:
 
-- http://localhost:8080/api/v1/manufacturing/docs
+- http://localhost:8080/api/v1/retail/docs
 
 For detailed API usage and endpoint information, refer to the Swagger documentation linked above.

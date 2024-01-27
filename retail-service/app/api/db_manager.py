@@ -55,7 +55,8 @@ async def delete_product(id: int):
 
 async def update_product(id: int, payload: ProductUpdate):
     query = product.update().where(product.c.product_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    await database.execute(query=query)
+    return await get_product(id)
 
 
 # Store functions
@@ -96,7 +97,8 @@ async def delete_store(id: int):
 
 async def update_store(id: int, payload: StoreUpdate):
     query = store.update().where(store.c.store_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    await database.execute(query=query)
+    return await get_store(id)
 
 
 # Customer functions
@@ -138,7 +140,8 @@ async def delete_customer(id: int):
 async def update_customer(id: int, payload: CustomerUpdate):
     query = customer.update().where(
         customer.c.customer_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    await database.execute(query=query)
+    return await get_customer(id)
 
 
 # Salesperson functions
@@ -180,7 +183,8 @@ async def delete_salesperson(id: int):
 async def update_salesperson(id: int, payload: SalespersonUpdate):
     query = salesperson.update().where(
         salesperson.c.salesperson_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    await database.execute(query=query)
+    return await get_salesperson(id)
 
 
 # Sale functions
@@ -221,7 +225,8 @@ async def delete_sale(id: int):
 
 async def update_sale(id: int, payload: SaleUpdate):
     query = sale.update().where(sale.c.sale_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    await database.execute(query=query)
+    return await get_sale(id)
 
 
 # SaleDetails functions
@@ -263,7 +268,8 @@ async def delete_sale_details(id: int):
 async def update_sale_details(id: int, payload: SaleDetailsUpdate):
     query = sale_detail.update().where(
         sale_detail.c.sale_details_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    await database.execute(query=query)
+    return await get_sale_details(id)
 
 
 # Promotion functions
@@ -305,7 +311,8 @@ async def delete_promotion(id: int):
 async def update_promotion(id: int, payload: PromotionUpdate):
     query = promotion.update().where(
         promotion.c.promotion_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    await database.execute(query=query)
+    return await get_promotion(id)
 
 
 # PromotionType functions
@@ -347,9 +354,8 @@ async def delete_promotion_type(id: int):
 async def update_promotion_type(id: int, payload: PromotionTypeUpdate):
     query = promotion_type.update().where(
         promotion_type.c.promo_type_id == id).values(**payload.dict())
-    return await database.execute(query=query)
-
-# Gender functions
+    await database.execute(query=query)
+    return await get_promotion_type(id)
 
 
 async def add_gender(payload: GenderCreate):
@@ -389,10 +395,12 @@ async def delete_gender(id: int):
 
 async def update_gender(id: int, payload: GenderUpdate):
     query = gender.update().where(gender.c.gender_id == id).values(**payload.dict())
-    return await database.execute(query=query)
-
+    await database.execute(query=query)
+    return await get_gender(id)
 
 # StoreType functions
+
+
 async def add_store_type(payload: StoreTypeCreate):
     query = store_type.insert().values(**payload.dict())
     return await database.execute(query=query)
@@ -431,10 +439,9 @@ async def delete_store_type(id: int):
 async def update_store_type(id: int, payload: StoreTypeUpdate):
     query = store_type.update().where(
         store_type.c.store_type_id == id).values(**payload.dict())
-    return await database.execute(query=query)
+    await database.execute(query=query)
+    return await get_store_type(id)
 
-
-# ProductStore functions
 
 async def get_all_product_stores():
     query = product_store.select()

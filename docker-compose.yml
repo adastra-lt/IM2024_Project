@@ -1,26 +1,28 @@
 version: '3.7'
 
 services:
-  manufacturing_service:
-    build: ./manufacturing-service
+  retail_service:
+    build: ./retail-service
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
     volumes:
-      - ./manufacturing-service/:/app/
+      - ./retail-service/:/app/
     ports:
-      - "8080:8000"  # Expose the service directly on port 8080
+      - "8080:8000"
     environment:
-      - DATABASE_URI=postgresql://manufacturing_db_username:manufacturing_db_password@manufacturing_db/manufacturing_db_dev
+      - DATABASE_URI=postgresql://retail_db_username:retail_db_password@retail_db/retail_db_dev
     depends_on:
-      - manufacturing_db
+      - retail_db
 
-  manufacturing_db:
+  retail_db:
     image: postgres:16.1-alpine
+    ports:
+      - "5432:5432"
     volumes:
-      - postgres_data_manufacturing:/var/lib/postgresql/data/
+      - postgres_data_retail:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=manufacturing_db_username
-      - POSTGRES_PASSWORD=manufacturing_db_password
-      - POSTGRES_DB=manufacturing_db_dev
+      - POSTGRES_USER=retail_db_username
+      - POSTGRES_PASSWORD=retail_db_password
+      - POSTGRES_DB=retail_db_dev
 
 volumes:
-  postgres_data_manufacturing:
+  postgres_data_retail:
