@@ -1,18 +1,36 @@
-
 # IM 2024 Project
 
-A small project that showcases Python, REST API (FastAPI), Docker, Pandas and SQL (Postgres) in a microservice architecture.
+A small project that showcases Python, REST API (FastAPI), Docker, and SQL (Postgres) in a microservice architecture.
 
+## Features
+
+- Microservice architecture with separate services for each concern.
+- RESTful API endpoints for managing retail operations.
+- Containerized services for easy deployment and scaling.
+
+## Data Model
+
+![Data Model](data-model.png "System Architecture Diagram")
 
 ## Installation
 
-- Install Docker Desktop or similar container tool for local development.
-- Execute the following commands in the root directory of the project:
+### Requirements
+
+- Docker Desktop or similar container tool for local development.
+
+### Setup
+
+Execute the following commands in the root directory of the project:
 
 ```bash
 docker-compose up -d
 ```
 
-To reach the Swagger UI, open the following links:
 
-- http://localhost:8080/api/v1/manufacturing/docs for manufacturing service docs
+### Usage
+
+To reach the Swagger UI, open the following link in your web browser:
+
+- http://localhost:8080/api/v1/manufacturing/docs
+
+For detailed API usage and endpoint information, refer to the Swagger documentation linked above.
